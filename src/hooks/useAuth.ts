@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useState } from "react"
 import axios from "axios";
 import { User } from "../types/api/user";
@@ -28,7 +29,7 @@ export const useAuth = () => {
         showMessage({ title: "ログインできません", status: "error" })        
       })
       .finally(() => setLoading(false));
-  }, [history]);
+  }, []);
 
   return { login, loading }
 }
