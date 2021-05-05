@@ -8,6 +8,7 @@ export const Login: VFC = memo(() => {
 
   const { login, loading } = useAuth();
 
+  // 型推論機能があるためuseState('')でもOK
   const [userId, setUserId] = useState<string>('');
 
   const onChangeUserId = (e: ChangeEvent<HTMLInputElement>) => {
