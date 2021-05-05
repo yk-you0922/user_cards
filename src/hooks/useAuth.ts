@@ -21,7 +21,10 @@ export const useAuth = () => {
         .get<User>(`https://jsonplaceholder.typicode.com/users/${id}`)
         .then((res) => {
           if (res.data) {
-            setLoginUser(res.data);
+            // isAdminフラグはresultのユーザーIDが10ならtrue, それ以外はfalseになるように定義
+            const isAdmin = res.data.id === 10 ? true : false;
+            // スプレッド構文で配列を展開し、そこにisAdminを配列の要素として足した形で表現
+            setLoginUser({ ...res.data, isAdmin});
             showMessage({ title: "ログインしました", status: "success" });
             history.push("/home");
           } else {

@@ -19,7 +19,6 @@ export const UserManagement: VFC = memo(() => {
   const { getUsers, users, loading } = useAllUsers();
   const { onSelectUser, selectedUser } = useSelectUser();
   const { loginUser } = useLoginUser();
-  // loginUserの情報を取得できるかどうかを確認
   console.log(loginUser);
 
   // ① 選択したユーザーカードから情報を取得 ② ①を内包したモーダルを開く
