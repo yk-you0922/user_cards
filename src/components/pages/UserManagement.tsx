@@ -11,15 +11,20 @@ import {
 import { UserCard } from "../organisms/user/UserCard";
 import { useAllUsers } from "../../hooks/useAllUsers";
 import { UserDetailModal } from "../organisms/user/UserDetailModal";
+import { useSelectUser } from "../../hooks/useSelectUser";
 
 export const UserManagement: VFC = memo(() => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { getUsers, users, loading } = useAllUsers();
+  const { onSelectUser, selectedUser } = useSelectUser();
 
-  const onClickUser = useCallback(() => {
-    onOpen();
-  }, [])
+  // ① 選択したユーザーカードから情報を取得 ② ①を内包したモーダルを開く
+  const onClickUser = useCallback((id: number) => {
+    onSelectUser({ id, users, onOpen });
+    // users, onSelectUser, onOpenに関心を持たせないと、最初に読み込んだままの状態になる
+    // 基本的に1行目のeslint-disabledはなしにして行うとこのバグには遭遇しにくくなるのでどうしてもという場合以外は使わない。
+  }, [users, onSelectUser, onOpen])
 
   // 画面読み込み時に1回のみ全ユーザーのデータを取得したいのでuseEffect
   useEffect(() => getUsers(), [])
@@ -35,20 +40,18 @@ export const UserManagement: VFC = memo(() => {
           {users.map((user) => (
             <WrapItem　key={user.id} mx="auto">
               <UserCard 
-                  imageUrl={"https://source.unsplash.com/random/users"} 
-                  userName={user.username} 
-                  fullName={user.name}
-                  onClick={onClickUser}
-                />
+                id={user.id}
+                imageUrl={"https://source.unsplash.com/random/users"} 
+                userName={user.username} 
+                fullName={user.name}
+                onClick={onClickUser}
+              />
               </WrapItem>
             ))}
         </Wrap>
       )}
       <UserDetailModal  
-        userName={"Yuki"}
-        fullName={"Yuki Arami"}
-        email={"test@test.com"}
-        phone={"000-1111-222"}
+        user={selectedUser}
         isOpen={isOpen}
         onClose={onClose}
       />
