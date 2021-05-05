@@ -19,7 +19,6 @@ export const UserManagement: VFC = memo(() => {
   const { getUsers, users, loading } = useAllUsers();
   const { onSelectUser, selectedUser } = useSelectUser();
   const { loginUser } = useLoginUser();
-  console.log(loginUser);
 
   // ① 選択したユーザーカードから情報を取得 ② ①を内包したモーダルを開く
   const onClickUser = useCallback(
@@ -55,7 +54,12 @@ export const UserManagement: VFC = memo(() => {
           ))}
         </Wrap>
       )}
-      <UserDetailModal user={selectedUser} isOpen={isOpen} onClose={onClose} />
+      <UserDetailModal 
+        user={selectedUser} 
+        isOpen={isOpen} 
+        isAdmin={loginUser?.isAdmin}
+        onClose={onClose} 
+      />
     </>
   );
 });
