@@ -4,9 +4,9 @@ import { User } from "../types/api/user";
 
 type Props = {
   id: number;
-  users: Array<User>
+  users: Array<User>;
   onOpen: () => void;
-}
+};
 
 // 選択したユーザー情報を特定し、モーダルを表示するカスタムフック
 export const useSelectUser = () => {
@@ -24,7 +24,7 @@ export const useSelectUser = () => {
     // 今回は表示されているデータをクリックして取得なので無い可能性が存在しないので③を採用
     setSelectedUser(targetUser!);
     onOpen();
-  }, [])
+  }, []);
 
-  return { onSelectUser, selectedUser }
-}
+  return { onSelectUser, selectedUser };
+};
